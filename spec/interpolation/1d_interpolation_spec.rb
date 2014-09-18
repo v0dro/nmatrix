@@ -37,13 +37,13 @@ describe NMatrix::Interpolation::OneDimensional do
     f = NMatrix::Interpolation::OneDimensional.new([0,1,2,3,4,5,6,7,8,9], [1.0, 
       2.718281828459045, 7.38905609893065, 20.085536923187668, 54.598150033144236, 
       148.4131591025766, 403.4287934927351, 1096.6331584284585, 2980.9579870417283, 
-      8103.083927575384], {kind: :linear, sorted: true})
+      8103.083927575384], :linear,{sorted: true})
 
     expect(f.interpolate(2.5)).to eq 13.737
   end
 
   it "tests for linear interpolation for 1-dimensional y values" do
-    f = NMatrix::Interpolation::OneDimensional.new(@x, @y, {kind: :linear, 
+    f = NMatrix::Interpolation::OneDimensional.new(@x, @y, :linear, { 
       precision: 3})
 
     expect(f.interpolate(2.5))              .to eq 13.737
@@ -57,7 +57,7 @@ describe NMatrix::Interpolation::OneDimensional do
 
   it "tests linear interpolation for N-dimensional y values" do
 
-    f = NMatrix::Interpolation::OneDimensional.new(@x,@nd, {kind: :linear, 
+    f = NMatrix::Interpolation::OneDimensional.new(@x,@nd, :linear, { 
       sorted: true, precision: 3})
 
     expect(f.interpolate(2.5))              .to eq [13.737,13.737,13.737]
@@ -79,7 +79,7 @@ describe NMatrix::Interpolation::OneDimensional do
     end
 
   it "tests linear interpolation for N-dimensional y on another axis" do
-   f = NMatrix::Interpolation::OneDimensional.new(@x, @nd, {kind: :linear, axis: 1, 
+   f = NMatrix::Interpolation::OneDimensional.new(@x, @nd, :linear, {axis: 1, 
     sorted: true, precision: 3})
    
    expect(f.interpolate(3.5))              .to eq 37.342

@@ -61,15 +61,12 @@ class NMatrix
       #            either be a 1D NMatrix or Array OR a 2D NMatrix. In case y contains 
       #            multiple columns, the interpolation is carried out on each column,
       #            unless specified.
+      # * +type+ - The type of interpolation to be performed.
       # 
       # * +opts+ - Various options for carrying out the interpolation, to be specified as
       #            a hash.
       # 
       # ==== Options
-      # 
-      # * +:kind+ - The kind of interpolation that the user wants to perform. Should be 
-      #             specified as a symbol. This option is compulsory. Only linear
-      #             interpolation supported as of now. 
       # 
       # * +:sorted+ - Set this option as *true* if the absicca collection is supplied in
       #             the arguments in a sorted manner. If not supplied, it will be assumed
@@ -82,8 +79,8 @@ class NMatrix
       # * +:precision+ - Specifies the precision of the interpolated values returned. Defaults
       #             to 3.
       # 
-      def initialize x, y, opts={}
-        super(x,y,opts)
+      def initialize x, y, type, opts={}
+        super x, y, type, opts
       end
 
       # Performs the actual interpolation on the value passed as an argument. Kind of 
@@ -98,12 +95,11 @@ class NMatrix
       #                   all its values. Will return answer in the form of an NMatrix if
       #                   *interpolant* is supplied as an NMatrix.
       def interpolate interpolant
-        result = case @opts[:kind]
+        result = case @type
         when :linear
-          for_each (interpolant) { |x| linear_interpolation(x)  }
+          collect (interpolant) { |x| linear_interpolation(x)  }
         else
-          raise(ArgumentError, "1 D interpolation of kind #{@opts[:kind]} \
-           not supported")
+          raise(ArgumentError, "Expected 1 D interpolation of type #{type}")
         end
 
         return result.to_nm if interpolant.is_a?(NMatrix)
@@ -113,7 +109,7 @@ class NMatrix
 
      private
 
-      def for_each interpolant
+      def collect interpolant
         result = []
 
         if interpolant.kind_of? Numeric
