@@ -62,6 +62,15 @@ $ git checkout new-feature
 Before commiting any code, please read our
 [Contributor Agreement](http://github.com/SciRuby/sciruby/wiki/Contributor-Agreement).
 
+## C/C++ style guide
+
+This section is a work in progress. Add stuff to it whenever you feel that something should be stated explicitly, but isn't.
+
+* Single statements following a `if`/`while`/`for` etc. should be preferably on the same line and _enclosed within braces_.
+* Use camel_case notation for arguments. No upper case.
+* Write a brief description of the arguments that your function receives in the comments directly above the function.
+* Explicitly state in the comments any anomalies that your function might have. For example, that it does not work with a certain storage or data type.
+
 ## Documentation
 
 There are two ways in which NMatrix is being documented: guides and comments, which are converted with RDoc into the
